@@ -42,7 +42,6 @@ from multiprocessing.pool import ThreadPool
 import os
 from random import shuffle
 import re
-from io import StringIO
 from io import BytesIO
 import cv2
 from PIL import Image
