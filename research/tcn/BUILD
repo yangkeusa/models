@@ -209,5 +209,6 @@ py_binary(
     main = "dataset/videos_to_tfrecords.py",
     deps = [
         ":preprocessing",
+        ":util",
     ],
 )

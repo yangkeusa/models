@@ -42,7 +42,8 @@ from multiprocessing.pool import ThreadPool
 import os
 from random import shuffle
 import re
-from StringIO import StringIO
+from io import StringIO
+from io import BytesIO
 import cv2
 from PIL import Image
 from PIL import ImageFile
@@ -50,7 +51,7 @@ from preprocessing import cv2resizeminedge
 from preprocessing import cv2rotateimage
 from preprocessing import shapestring
 from utils.progress import Progress
-import tensorflow.google as tf
+import tensorflow as tf
 tf.logging.set_verbosity(tf.logging.INFO)
 
 
@@ -212,7 +213,8 @@ def JpegString(image, jpeg_quality=90):
   # substantially larger than the size of the image being saved.
   ImageFile.MAXBLOCK = 640 * 512 * 64
 
-  output_jpeg = StringIO()
+  #output_jpeg = StringIO()
+  output_jpeg = BytesIO()
   image.save(output_jpeg, 'jpeg', quality=jpeg_quality, optimize=True)
   return output_jpeg.getvalue()
 
@@ -359,7 +361,7 @@ def AddSequence(sequence, writer, progress, errors):
           feature=view_images[view_idx])
 
     context_features = tf.train.Features(feature={
-        'task': bytes_feature([shortname]),
+        'task': bytes_feature([str.encode(shortname)]),
         'len': int64_feature([num_timesteps])
     })
     feature_lists = tf.train.FeatureLists(feature_list=view_to_feature_list)
