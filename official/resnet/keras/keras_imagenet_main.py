@@ -199,7 +199,6 @@ def run(flags_obj):
         input_layer_batch_size = flags_obj.batch_size
     else:
       input_layer_batch_size = None
-    input_layer_batch_size = flags_obj.batch_size  # HZDEBUG
 
     if flags_obj.use_trivial_model:
       model = trivial_model.trivial_model(imagenet_main.NUM_CLASSES)
