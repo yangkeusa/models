@@ -77,4 +77,4 @@ class T(object):
     return self.__dict__.keys()
 
   def iteritems(self):
-    return self.__dict__.iteritems()
+    return self.__dict__.items()
