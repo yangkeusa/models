@@ -241,7 +241,7 @@ def capture_webcam(camera, display_queue, reconcile_queue):
     reconcile_queue: An ImageQueue.
   """
   # Take some ramp images to allow cams to adjust for brightness etc.
-  for i in range(60):
+  for i in range(1):
     tf.logging.info('Taking ramp image %d.' % i)
     get_image(camera)
 
