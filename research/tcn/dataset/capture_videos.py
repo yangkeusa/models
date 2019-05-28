@@ -21,17 +21,23 @@ def single_camera_capture(idx, barrier, capture, frames, max_seconds):
     """
     print("Thread %d starts..." % idx)
     print("Warming up [idx=%d]..." % idx)
-    for i in range(5):
-        print("Taking ramp img #%d for thread idx%d" % (i, idx))
+    # We need to warm up the camera as also measure the FPS.
+    start = time.time()
+    num_frames = 60
+    for i in range(num_frames):
+        #print("Taking ramp img #%d for thread idx%d" % (i, idx))
         ret, frame = capture.read()
-        print ("RET=", ret, "i=", i, "IDX=", idx)
+        #print ("RET=", ret, "i=", i, "IDX=", idx)
         #cv2.imshow('frame', frame)
-    print("Warm up done [idx=%d]" % idx)
+    end = time.time()
+    duration = end - start
+    fps = num_frames / duration
+    print("Warm up done [idx=%d]: duration = %f, FPS = %f" % (idx, duration, fps))
+    
     size = (int(capture.get(cv2.CAP_PROP_FRAME_WIDTH)), int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT)))
     fourcc = cv2.VideoWriter_fourcc('m', 'p', '4', 'v') # note the lower case
     vout = cv2.VideoWriter()
     file_name = 'output_%d.mov' % idx
-    fps = 30
     success = vout.open(file_name, fourcc, fps, size, True)
     print("Videp Writer ready: idx=%d" % idx)
     barrier.wait()
